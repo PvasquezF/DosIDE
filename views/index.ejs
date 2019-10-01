@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Dos IDE</title>
+    <link rel="stylesheet" href="/Css/codemirror.css">
+    <link rel="stylesheet" href="/Css/dracula.css">
+    <link rel="stylesheet" href="/Css/bootstrap.css">
+    <link rel="stylesheet" href="/Css/main.css">
+</head>
+
+<body>
+    <div class="area">
+        <h1>hola</h1>
+        <textarea id="myTextarea" name="myTextarea"></textarea>
+    </div>
+    <script src="/Js/codemirror.js"></script>
+    <script src="/Js/Jquery.js"></script>
+    <script src="/Js/bootstrap.js"></script>
+    <script src="/Mode/javascript/javascript.js"></script>
+    <script>
+        var editor = CodeMirror.fromTextArea(myTextarea, {
+            lineNumbers: true,
+            mode: "javascript",
+            theme: "dracula"
+        });
+    </script>
+</body>
+
+</html>
