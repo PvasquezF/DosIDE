@@ -12,8 +12,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
-app.use('/', express.static(process.cwd() + '/'));
+//app.use('/', express.static(process.cwd() + '/'));
 app.use(express.static(__dirname + '/Web'));
+app.use(express.static(__dirname + '/Cuadruplos'));
 index.routesConfig(app, socket);
 app.set("view engine", "ejs");
 

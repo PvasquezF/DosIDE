@@ -1,6 +1,6 @@
 var net = require('net');
 exports.routesConfig = function (app, socket) {
-    app.get("/", (req, res) => {
+    app.get("/Ejecutar", (req, res) => {
         var client = net.connect(3002, 'localhost');
         server = net.createServer(function (socket) {
             console.log('Cliente java conectado');
@@ -25,5 +25,11 @@ exports.routesConfig = function (app, socket) {
         fsf`);
         client.end();
         //return res.render('index.ejs');
+    });
+
+    app.get("/", (req, res) => {
+        return res.render('index.ejs', {
+            data: "hola"
+        });
     });
 }

@@ -16,6 +16,7 @@
     <div class="area">
         <h1><%=data%></h1>
         <textarea id="myTextarea" name="myTextarea"></textarea>
+        <button onclick="ejecutar()">Boton</button>
     </div>
     <script src="/Js/codemirror.js"></script>
     <script src="/Js/Jquery.js"></script>
@@ -28,7 +29,24 @@
             theme: "dracula"
         });
     </script>
-
+    <script> var exports = {}; </script>
+    <script src="/Grammar/quadruplesGrammar.js"></script>
+    <script src="/Arbol/AST.js"></script>
+    <script src="/TablaSimbolo/Simbolo.js"></script>
+    <script src="/TablaSimbolo/Tabla.js"></script>
+    <script src="/Arbol/Asignacion.js"></script>
+    <script src="/Arbol/Metodo.js"></script>
+    <script src="/Arbol/Llamada.js"></script>
+    <script src="/Arbol/Operacion.js"></script>
+    <script src="/Arbol/AsignacionEstructura.js"></script>
+    <script src="/Arbol/AccesoEstructura.js"></script>
+    <script src="/Arbol/Print.js"></script>
+    <script src="/Arbol/Identificador.js"></script>
+    <script src="/Arbol/Primitivo.js"></script>
+    <script src="/Arbol/Etiqueta.js"></script>
+    <script src="/Arbol/SaltoCondicional.js"></script>
+    <script src="/Arbol/SaltoIncondicional.js"></script>
+    <script src="/Ejecucion4D.js"></script>
 </body>
 
 </html>
