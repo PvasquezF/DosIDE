@@ -10,13 +10,122 @@
     <link rel="stylesheet" href="/Css/dracula.css">
     <link rel="stylesheet" href="/Css/bootstrap.css">
     <link rel="stylesheet" href="/Css/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Mansalva&display=swap" rel="stylesheet">
 </head>
 
-<body>
-    <div class="area">
-        <h1><%=data%></h1>
-        <textarea id="myTextarea" name="myTextarea"></textarea>
-        <button onclick="ejecutar()">Boton</button>
+<body id="cuerpo" class="cuerpo">
+    <center>
+        <a>
+            <h5>DosIDE</h5>
+        </a>
+    </center>
+    <div class="row_layout">
+        <div class="column_layout" style="position: relative; width: 100%; background: red;">
+            <div id="pestañasEditor" class="row_layout menu">
+                <center>
+                    <button id="img-button" class="tablinks" onclick="openTabEditor(event, 'dosIde', editor, true, this)">
+                        <img style="width: 40px;"src="resources/Translate.png"></button>
+                    <button id="img-button" class="tablinks" onclick="openTabEditor(event, 'cuadruplos', editor, true, this)">
+                        <img style="width: 40px;"src="resources/4D.png"></button></center>
+            </div>
+        </div>
+    </div>
+    <div class="row_layout" style="height: 50px;"></div>
+    <div class="row_layout">
+        <div id="dosIde" class="tabEditor">
+            <div class="column_layout">
+                <div style="width: 900px;">
+                    <div id="AreaTexto">
+                        <textarea id="myTextarea" name="myTextarea"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="column_layout">
+                <div id="panelTraduccion">
+                    <center>
+                        <h1>Traducción</h1>
+                    </center>
+                    <button id="buttonTranslate" onclick="Traducir()">Traducir</button>
+                    <br/>
+                    <button id="buttonErrors" onclick="MostrarErrores()">Reporte errores</button>
+                    <br/>
+                    <button id="buttonTsim" onclick="MostrarSimbolos()">Tabla de simbolos</button>
+                </div>
+            </div>
+        </div>
+        <div id="cuadruplos" class="tabEditor">
+            <div class="row_layout">
+                <center>
+                    <button onclick="ejecutar4D()">Ejecutar</button>
+                    <button>Optimización</button>
+                    <button>Debugger</button>
+                    <button>Generar Assembler</button>
+                </center>
+            </div>
+            <br/>
+            <div class="column_layout">
+                <div style="width: 415px;">
+                    <div id="AreaTexto">
+                        <textarea id="textarea4d" name="textarea4d"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="column_layout">
+                <div id="panelDebugger" class="row_layout">
+                    <center>
+                        <h1>Debugger</h1>
+                    </center>
+                    <div id="panelStack" class="column_layout">
+                        <center>
+                            <table id="tablaStack" style="width:100%">
+                                <tr>
+                                    <th colspan="2" scope="colgroup">Stack</th>
+                                </tr>
+                                <tr>
+                                    <th>Direccion</th>
+                                    <th>Valor</th>
+                                </tr>
+                                <tr>
+                                    <td>Jill</td>
+                                    <td>Smith</td>
+                                </tr>
+                                <tr>
+                                    <td>Eve</td>
+                                    <td>Jackson</td>
+                                </tr>
+                            </table>
+                        </center>
+                    </div>
+
+                    <div id="panelHeap" class="column_layout">
+                        <center>
+                            <table id="tablaHeap" style="width:100%">
+                                <tr>
+                                    <th colspan="2" scope="colgroup">Heap</th>
+                                </tr>
+                                <tr>
+                                    <th>Direccion</th>
+                                    <th>Valor</th>
+                                </tr>
+                                <tr>
+                                    <td>Jill</td>
+                                    <td>Smith</td>
+                                </tr>
+                                <tr>
+                                    <td>Eve</td>
+                                    <td>Jackson</td>
+                                </tr>
+                            </table>
+                        </center>
+                    </div>
+                </div>
+            </div>
+            <div class="column_layout">
+                <div id="Consola">
+                    <textarea id="consolaArea" name="consolaArea" class="consola"></textarea>
+                </div>
+            </div>
+        </div>
     </div>
     <script src="/Js/codemirror.js"></script>
     <script src="/Js/Jquery.js"></script>
@@ -28,8 +137,21 @@
             mode: "javascript",
             theme: "dracula"
         });
+        editor.setSize(null, 520);
     </script>
-    <script> var exports = {}; </script>
+    <script>
+        var editor4D = CodeMirror.fromTextArea(textarea4d, {
+            lineNumbers: true,
+            mode: "javascript",
+            theme: "dracula"
+        });
+        editor4D.setSize(null, 490);
+    </script>
+
+    <script src="/Js/main.js"></script>
+    <script>
+        var exports = {};
+    </script>
     <script src="/Grammar/quadruplesGrammar.js"></script>
     <script src="/Arbol/AST.js"></script>
     <script src="/TablaSimbolo/Simbolo.js"></script>
@@ -47,6 +169,10 @@
     <script src="/Arbol/SaltoCondicional.js"></script>
     <script src="/Arbol/SaltoIncondicional.js"></script>
     <script src="/Ejecucion4D.js"></script>
+    <script src="/Js/Traducir.js"></script>
+    <script>
+        $('#img-button')[0].click()
+    </script>
 </body>
 
 </html>

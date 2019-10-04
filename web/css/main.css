@@ -1,3 +1,222 @@
-.area{
+.area {
     background-color: red;
+}
+
+#cuerpo {
+    background-color: #d2c6f3;
+}
+
+.column_layout {
+    float: left;
+    width: 1%;
+}
+
+.row_layout:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+@media screen and (max-width: 600px) {
+    .column_layout {
+        width: 100%;
+    }
+}
+
+.menu {
+    width: 200px;
+    left: 50%;
+    margin-left: -100px;
+    position: absolute;
+}
+
+.pestañas {
+    border-style: solid;
+    border-radius: 5px;
+    height: 243px;
+    width: 1050px;
+    position: relative;
+    top: 10px;
+}
+
+.PaquetesRecibidos {
+    overflow: auto;
+}
+
+.consola {
+    height: 100%;
+    width: 100%;
+    border-style: solid;
+    border-radius: 5px;
+    border-width: 2px;
+    background-color: black;
+    color: greenyellow;
+    resize: none;
+}
+
+.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+.tabsEditor {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+
+/* Style the buttons that are used to open the tab content */
+
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 4px 4px;
+    transition: 0.3s;
+}
+
+.tabsEditor button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 4px 4px;
+    transition: 0.3s;
+}
+
+
+/* Change background color of buttons on hover */
+
+.tab button:hover {
+    background-color: #ddd;
+}
+
+
+/* Create an active/current tablink class */
+
+.tab button.active {
+    background-color: #ccc;
+}
+
+.tabsEditor button:hover {
+    background-color: #ddd;
+}
+
+
+/* Create an active/current tablink class */
+
+.tabsEditor button.active {
+    background-color: #ccc;
+}
+
+
+/* Style the tab content */
+
+.tabcontent {
+    display: none;
+    border: 1px solid #ccc;
+    border-top: none;
+    height: 86%;
+    width: 100%;
+}
+
+.tabEditor {
+    display: none;
+    height: 550px;
+    width: 50%;
+}
+
+#AreaTexto {
+    height: 100%;
+    left: 1%;
+    position: relative;
+    background-color: blue;
+}
+
+#panelTraduccion {
+    background-color: blue;
+    left: 920px;
+    width: 410px;
+    height: 520px;
+    position: relative;
+    font-family: 'Mansalva', cursive;
+}
+
+#panelDebugger {
+    background-color: blue;
+    left: 420px;
+    width: 430px;
+    height: 490px;
+    position: relative;
+    font-family: 'Mansalva', cursive;
+    overflow: auto;
+}
+
+#panelStack {
+    background-color: green;
+    width: 200px;
+    left: 10px;
+    top: 20px;
+    position: relative;
+    overflow: auto;
+}
+
+#panelHeap {
+    background-color: pink;
+    width: 200px;
+    top: 20px;
+    left: 20px;
+    position: relative;
+}
+
+#img-button {
+    background-color: Transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+}
+
+#buttonTranslate {
+    left: 30px;
+    position: relative;
+}
+
+#buttonErrors {
+    left: 30px;
+    position: relative;
+}
+
+#buttonTsim {
+    left: 30px;
+    position: relative;
+}
+
+table,
+th,
+td {
+    border: 1px solid black;
+}
+
+#cuadruplos {
+    height: 500px;
+}
+
+.consola {
+    left: 850px;
+    height: 490px;
+    width: 480px;
+    border-style: solid;
+    border-radius: 5px;
+    border-width: 2px;
+    background-color: black;
+    color: greenyellow;
+    resize: none;
+    position: relative;
 }

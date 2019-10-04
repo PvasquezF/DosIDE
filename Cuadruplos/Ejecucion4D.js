@@ -1,6 +1,7 @@
-function ejecutar() {
+function ejecutar4D() {
     // @ts-ignore
-    var result = quadruplesGrammar.parse(editor.getValue());
+    var result = quadruplesGrammar.parse(editor4D.getValue());
+    document.getElementById("consolaArea").value = "";
     var indexInstruccion = 0;
     var tabla;
     this.tabla = new Tabla(null);
@@ -17,8 +18,8 @@ function ejecutar() {
 
     for (indexInstruccion = 0; indexInstruccion < result.instrucciones.length; indexInstruccion++) {
         //console.log(JSON.parse(JSON.stringify(this.tabla)));
-        if (result.instrucciones[indexInstruccion] instanceof Etiqueta
-            || result.instrucciones[indexInstruccion] instanceof Metodo) {
+        if (result.instrucciones[indexInstruccion] instanceof Etiqueta ||
+            result.instrucciones[indexInstruccion] instanceof Metodo) {
             continue;
         }
         if (result.instrucciones[indexInstruccion] instanceof SaltoCondicional) {
