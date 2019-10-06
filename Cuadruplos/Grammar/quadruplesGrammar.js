@@ -86,56 +86,74 @@ switch (yystate) {
 case 1:
 return new AST($$[$0-1]);
 break;
-case 2: case 6:
-this.$ = $$[$0-1]; this.$.push($$[$0]);
+case 2:
+
+                                        if($$[$0] instanceof Metodo){
+                                                this.$ = $$[$0-1]; this.$ = this.$.concat($$[$0].instruccionesMetodo);
+                                        }else{
+                                                this.$ = $$[$0-1]; this.$.push($$[$0]);
+                                        }
+                                
 break;
-case 3: case 7:
-this.$ = [$$[$0]];
+case 3:
+
+                        if($$[$0] instanceof Metodo){
+                                this.$ = $$[$0].instruccionesMetodo;;
+                        }else{
+                                this.$ = [$$[$0]];
+                        }
+                     
 break;
 case 4: case 5: case 8: case 9: case 10: case 11: case 12: case 13: case 14: case 15: case 27: case 28: case 29: case 30: case 31: case 32: case 33: case 34: case 35: case 36: case 37: case 40:
 this.$ = $$[$0];
 break;
+case 6:
+this.$ = $$[$0-1]; this.$.push($$[$0]);
+break;
+case 7:
+this.$ = [$$[$0]];
+break;
 case 16:
-this.$ = new SaltoCondicional($$[$0]);
+this.$ = new SaltoCondicional($$[$0], yylineno + 1, _$[_$.length - 1].last_column + 1);
 break;
 case 17:
-this.$ = new SaltoIncondicional($$[$0-6], new Identificador($$[$0-4]), new Identificador($$[$0-2]), $$[$0]);
+this.$ = new SaltoIncondicional($$[$0-6], new Identificador($$[$0-4]), new Identificador($$[$0-2]), $$[$0], yylineno + 1, _$[_$.length - 1].last_column + 1);
 break;
 case 18:
-this.$ = new Etiqueta($$[$0-1]);
+this.$ = new Etiqueta($$[$0-1], yylineno + 1, _$[_$.length - 1].last_column + 1);
 break;
 case 19:
-this.$ = new AsignacionEstructura($$[$0-4], $$[$0-2], $$[$0]);
+this.$ = new AsignacionEstructura($$[$0-4], $$[$0-2], $$[$0], yylineno + 1, _$[_$.length - 1].last_column + 1);
 break;
 case 20:
-this.$ = new Asignacion($$[$0], $$[$0-3]);
+this.$ = new Asignacion($$[$0], $$[$0-3], yylineno + 1, _$[_$.length - 1].last_column + 1);
 break;
 case 21:
-this.$ = new  AccesoEstructura($$[$0-4], $$[$0-2], $$[$0]);
+this.$ = new  AccesoEstructura($$[$0-4], $$[$0-2], $$[$0], yylineno + 1, _$[_$.length - 1].last_column + 1);
 break;
 case 22:
-this.$ = new Metodo($$[$0-6], $$[$0-5]);
+this.$ = new Metodo($$[$0-6], $$[$0-5], yylineno + 1, _$[_$.length - 1].last_column + 1);
 break;
 case 23:
-this.$ = new Metodo($$[$0-5], []);
+this.$ = new Metodo($$[$0-5], [], yylineno + 1, _$[_$.length - 1].last_column + 1);
 break;
 case 24:
-this.$ = new Llamada($$[$0]);
+this.$ = new Llamada($$[$0], yylineno + 1, _$[_$.length - 1].last_column + 1);
 break;
 case 25:
 this.$ = $$[$0-4] +$$[$0-3] + $$[$0-2] + $$[$0-1] + $$[$0];
 break;
 case 26:
-this.$ = new Print($$[$0-3], $$[$0-1]);
+this.$ = new Print($$[$0-3], $$[$0-1], yylineno + 1, _$[_$.length - 1].last_column + 1);
 break;
 case 38: case 39:
-this.$ = new Primitivo(Number($$[$0]));
+this.$ = new Primitivo(Number($$[$0]), yylineno + 1, _$[_$.length - 1].last_column + 1);
 break;
 case 41: case 42: case 43:
-this.$ = new Identificador($$[$0]);
+this.$ = new Identificador($$[$0], yylineno + 1, _$[_$.length - 1].last_column + 1);
 break;
 case 44: case 45: case 46: case 47: case 48:
-this.$ = new Operacion($$[$0-6], $$[$0-4], $$[$0-2], $$[$0]);
+this.$ = new Operacion($$[$0-6], $$[$0-4], $$[$0-2], $$[$0], yylineno + 1, _$[_$.length - 1].last_column + 1);
 break;
 }
 },

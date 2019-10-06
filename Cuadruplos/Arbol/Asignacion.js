@@ -1,7 +1,9 @@
 class Asignacion {
-    constructor(Identificador, Valor) {
+    constructor(Identificador, Valor, fila, columna) {
         this.Identificador = Identificador;
         this.Valor = Valor;
+        this.fila = fila;
+        this.columna = columna;
     }
     Ejecutar(tabla) {
         let value = this.Valor.Ejecutar(tabla);

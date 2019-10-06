@@ -1,7 +1,9 @@
 class Print {
-    constructor(Parametro, Valor) {
+    constructor(Parametro, Valor, fila, columna) {
         this.Parametro = Parametro;
         this.Valor = Valor;
+        this.fila = fila;
+        this.columna = columna;
     }
     Ejecutar(tabla) {
         let value = this.Valor.Ejecutar(tabla);

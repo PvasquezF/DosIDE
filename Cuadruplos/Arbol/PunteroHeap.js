@@ -1,5 +1,7 @@
 class PunteroHeap {
-    constructor() {
+    constructor(fila, columna) {
+        this.fila = fila;
+        this.columna = columna;
     }
     Ejecutar(tabla) {
         return null;

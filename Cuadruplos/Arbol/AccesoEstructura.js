@@ -1,8 +1,10 @@
 class AccesoEstructura {
-    constructor(Estructura, Direccion, Memoria) {
+    constructor(Estructura, Direccion, Memoria, fila, columna) {
         this.Estructura = Estructura;
         this.Direccion = Direccion;
         this.Memoria = Memoria;
+        this.fila = fila;
+        this.columna = columna;
     }
     Ejecutar(tabla) {
         let dir = this.Direccion.Ejecutar(tabla);

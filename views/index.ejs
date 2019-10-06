@@ -54,13 +54,15 @@
             </div>
         </div>
         <div id="cuadruplos" class="tabEditor">
-            <div class="row_layout">
-                <center>
-                    <button onclick="ejecutar4D()">Ejecutar</button>
-                    <button>Optimización</button>
-                    <button>Debugger</button>
-                    <button>Generar Assembler</button>
-                </center>
+            <div class="row_layout" style="width: 1000px;">
+                <button onclick="ejecutar4D()">Ejecutar</button>
+                <button>Optimización</button>
+                <button id="btnActivarDebugger" onclick="activarDebugger()">Debugger</button>
+                <button onclick="removeBreakpoints()">Quitar breakpoints</button>
+                <button>Generar Assembler</button>
+                <button class="btnDebugger" onclick="continuarDebugger()" style="display: none;">Continuar</button>
+                <button class="btnDebugger" onclick="continuarInstruccion()" style="display: none;">Paso a paso</button>
+                <button class="btnDebugger" style="display: none;" onclick="detenerDebugger()">Detener</button>
             </div>
             <br/>
             <div class="column_layout">
@@ -85,14 +87,6 @@
                                     <th>Direccion</th>
                                     <th>Valor</th>
                                 </tr>
-                                <tr>
-                                    <td>Jill</td>
-                                    <td>Smith</td>
-                                </tr>
-                                <tr>
-                                    <td>Eve</td>
-                                    <td>Jackson</td>
-                                </tr>
                             </table>
                         </center>
                     </div>
@@ -106,14 +100,6 @@
                                 <tr>
                                     <th>Direccion</th>
                                     <th>Valor</th>
-                                </tr>
-                                <tr>
-                                    <td>Jill</td>
-                                    <td>Smith</td>
-                                </tr>
-                                <tr>
-                                    <td>Eve</td>
-                                    <td>Jackson</td>
                                 </tr>
                             </table>
                         </center>
@@ -158,6 +144,8 @@
     <script src="/TablaSimbolo/Tabla.js"></script>
     <script src="/Arbol/Asignacion.js"></script>
     <script src="/Arbol/Metodo.js"></script>
+    <script src="/Arbol/IniciarMetodo.js"></script>
+    <script src="/Arbol/FinalizarMetodo.js"></script>
     <script src="/Arbol/Llamada.js"></script>
     <script src="/Arbol/Operacion.js"></script>
     <script src="/Arbol/AsignacionEstructura.js"></script>
@@ -169,6 +157,7 @@
     <script src="/Arbol/SaltoCondicional.js"></script>
     <script src="/Arbol/SaltoIncondicional.js"></script>
     <script src="/Ejecucion4D.js"></script>
+    <script src="/Debugger4D.js"></script>
     <script src="/Js/Traducir.js"></script>
     <script>
         $('#img-button')[0].click()

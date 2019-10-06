@@ -4,7 +4,10 @@ class Tabla {
         this.heap = [];
         this.tabla = new Array();
         this.Anterior = Anterior;
-        this.InsertUpdate("h", this.heap.lenght-1);
+        this.isDebugger = false;
+        this.indiceDebugger = 0;
+        this.listaRetornosCall = [];
+        this.InsertUpdate("h", this.heap.lenght - 1);
         this.InsertUpdate("p", 0);
     }
     InsertUpdate(id, valor) {
@@ -34,8 +37,8 @@ class Tabla {
     }
 
     getItem(id) {
-        if(id.toLowerCase() == "h"){
-            return heap.lenght-1;
+        if (id.toLowerCase() == "h") {
+            return heap.lenght - 1;
         }
         var i = 0;
         for (i = 0; i < this.tabla.length; i++) {

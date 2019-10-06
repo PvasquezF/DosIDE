@@ -1,12 +1,13 @@
-class Etiqueta {
+class FinalizarMetodo {
     constructor(Identificador, fila, columna) {
         this.Identificador = Identificador;
         this.fila = fila;
         this.columna = columna;
     }
     Ejecutar(tabla) {
-        tabla.InsertUpdate(this.Identificador, this.index);
-        return null;
+        let value = this.index;
+        //tabla.InsertUpdate(this.Identificador, value);
+        return value;
     }
 }
-exports.Etiqueta = Etiqueta;
+exports.FinalizarMetodo = FinalizarMetodo;

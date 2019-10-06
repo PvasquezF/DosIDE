@@ -55,8 +55,20 @@ L[0-9]+                 return 'etiqueta'
 INICIO : ELEMENTOS EOF {return new AST($1);}
         ;
 
-ELEMENTOS : ELEMENTOS ELEMENTO {$$ = $1; $$.push($2);}
-          | ELEMENTO {$$ = [$1];}
+ELEMENTOS : ELEMENTOS ELEMENTO {
+                                        if($2 instanceof Metodo){
+                                                $$ = $1; $$ = $$.concat($2.instruccionesMetodo);
+                                        }else{
+                                                $$ = $1; $$.push($2);
+                                        }
+                                }
+          | ELEMENTO {
+                        if($1 instanceof Metodo){
+                                $$ = $1.instruccionesMetodo;;
+                        }else{
+                                $$ = [$1];
+                        }
+                     }
           ;
            
 ELEMENTO : INSTRUCCION {$$ = $1;}
@@ -79,29 +91,29 @@ SALTOS : CONDICIONAL {$$ = $1;}
        | INCONDICIONAL {$$ = $1;}
        ;
 
-CONDICIONAL : salto ',' ',' ',' etiqueta {$$ = new SaltoCondicional($5);} 
+CONDICIONAL : salto ',' ',' ',' etiqueta {$$ = new SaltoCondicional($5, yylineno + 1, _$[_$.length - 1].last_column + 1);} 
             ;
 
-INCONDICIONAL : TIPOSALTO ',' temporal ',' temporal ',' etiqueta {$$ = new SaltoIncondicional($1, new Identificador($3), new Identificador($5), $7);} 
+INCONDICIONAL : TIPOSALTO ',' temporal ',' temporal ',' etiqueta {$$ = new SaltoIncondicional($1, new Identificador($3), new Identificador($5), $7, yylineno + 1, _$[_$.length - 1].last_column + 1);} 
             ;
 
-ETIQUETA : etiqueta ':' {$$ = new Etiqueta($1);}
+ETIQUETA : etiqueta ':' {$$ = new Etiqueta($1, yylineno + 1, _$[_$.length - 1].last_column + 1);}
          ;
 
-ASIGNACION : '=' ',' VALOR ',' VALOR ',' ESTRUCTURA {$$ = new AsignacionEstructura($3, $5, $7);} // HEAP[VALOR1] = VALOR2
-           | '=' ',' VALOR ',' ',' VALOR {$$ = new Asignacion($6, $3);} // VALOR2 = VALOR1
-           | '=' ',' ESTRUCTURA ',' VALOR ',' VARIABLE {$$ = new  AccesoEstructura($3, $5, $7);} // VALOR2 = HEAP[VALOR1]
+ASIGNACION : '=' ',' VALOR ',' VALOR ',' ESTRUCTURA {$$ = new AsignacionEstructura($3, $5, $7, yylineno + 1, _$[_$.length - 1].last_column + 1);} // HEAP[VALOR1] = VALOR2
+           | '=' ',' VALOR ',' ',' VALOR {$$ = new Asignacion($6, $3, yylineno + 1, _$[_$.length - 1].last_column + 1);} // VALOR2 = VALOR1
+           | '=' ',' ESTRUCTURA ',' VALOR ',' VARIABLE {$$ = new  AccesoEstructura($3, $5, $7, yylineno + 1, _$[_$.length - 1].last_column + 1);} // VALOR2 = HEAP[VALOR1]
            ;
 
-METODO : begin ',' ',' ',' identificador INSTRUCCIONES end ',' ',' ',' identificador {$$ = new Metodo($5, $6);}
-       | begin ',' ',' ',' identificador end ',' ',' ',' identificador {$$ = new Metodo($5, []);}
+METODO : begin ',' ',' ',' identificador INSTRUCCIONES end ',' ',' ',' identificador {$$ = new Metodo($5, $6, yylineno + 1, _$[_$.length - 1].last_column + 1);}
+       | begin ',' ',' ',' identificador end ',' ',' ',' identificador {$$ = new Metodo($5, [], yylineno + 1, _$[_$.length - 1].last_column + 1);}
        ;
 
-LLAMADA : llamada ',' ',' ',' identificador {$$ = new Llamada($5);}    
+LLAMADA : llamada ',' ',' ',' identificador {$$ = new Llamada($5, yylineno + 1, _$[_$.length - 1].last_column + 1);}    
         | llamada ',' ',' ',' invalue {$$ = $1 +$2 + $3 + $4 + $5;}  
         ;
 
-PRINT : imprimir '(' PARAMETROPRINT ',' VALOR ')' {$$ = new Print($3, $5);}  
+PRINT : imprimir '(' PARAMETROPRINT ',' VALOR ')' {$$ = new Print($3, $5, yylineno + 1, _$[_$.length - 1].last_column + 1);}  
       ;
 
 PARAMETROPRINT : cadenaprint {$$ = $1;}
@@ -121,19 +133,19 @@ TIPOSALTO : je {$$ = $1;}
           | jle {$$ = $1;}
           ;
 
-VALOR : entero {$$ = new Primitivo(Number($1));}
-      | decimal {$$ = new Primitivo(Number($1));}
+VALOR : entero {$$ = new Primitivo(Number($1), yylineno + 1, _$[_$.length - 1].last_column + 1);}
+      | decimal {$$ = new Primitivo(Number($1), yylineno + 1, _$[_$.length - 1].last_column + 1);}
       | VARIABLE {$$ = $1;}
       ;
 
-VARIABLE : temporal {$$ = new Identificador($1);}
-         | punteroHeap {$$ = new Identificador($1);}
-         | punteroStack {$$ = new Identificador($1);}
+VARIABLE : temporal {$$ = new Identificador($1, yylineno + 1, _$[_$.length - 1].last_column + 1);}
+         | punteroHeap {$$ = new Identificador($1, yylineno + 1, _$[_$.length - 1].last_column + 1);}
+         | punteroStack {$$ = new Identificador($1, yylineno + 1, _$[_$.length - 1].last_column + 1);}
          ;
  
-OPERACION : '+' ',' VALOR ',' VALOR ',' VARIABLE {$$ = new Operacion($1, $3, $5, $7);} 
-          | '-' ',' VALOR ',' VALOR ',' VARIABLE {$$ = new Operacion($1, $3, $5, $7);} 
-          | '*' ',' VALOR ',' VALOR ',' VARIABLE {$$ = new Operacion($1, $3, $5, $7);} 
-          | '/' ',' VALOR ',' VALOR ',' VARIABLE {$$ = new Operacion($1, $3, $5, $7);} 
-          | '%' ',' VALOR ',' VALOR ',' VARIABLE {$$ = new Operacion($1, $3, $5, $7);}  
+OPERACION : '+' ',' VALOR ',' VALOR ',' VARIABLE {$$ = new Operacion($1, $3, $5, $7, yylineno + 1, _$[_$.length - 1].last_column + 1);} 
+          | '-' ',' VALOR ',' VALOR ',' VARIABLE {$$ = new Operacion($1, $3, $5, $7, yylineno + 1, _$[_$.length - 1].last_column + 1);} 
+          | '*' ',' VALOR ',' VALOR ',' VARIABLE {$$ = new Operacion($1, $3, $5, $7, yylineno + 1, _$[_$.length - 1].last_column + 1);} 
+          | '/' ',' VALOR ',' VALOR ',' VARIABLE {$$ = new Operacion($1, $3, $5, $7, yylineno + 1, _$[_$.length - 1].last_column + 1);} 
+          | '%' ',' VALOR ',' VALOR ',' VARIABLE {$$ = new Operacion($1, $3, $5, $7, yylineno + 1, _$[_$.length - 1].last_column + 1);}  
           ;
