@@ -12,7 +12,6 @@ function activarDebugger() {
     }
     debugear4D();
     var posicion = 0;
-    console.log(listaBreakpoints);
     for (i = 0; i < instruccionesDebugger.length; i++) {
         posicion = listaBreakpoints.indexOf(instruccionesDebugger[i].fila);
         if (posicion != -1) {
@@ -55,6 +54,7 @@ function continuarInstruccion() {
     ejecutarInstruccion(instruccionesDebugger, tabla);
     actualizarStack();
     actualizarHeap();
+    actualizarSimbolos();
     if (tabla.indiceDebugger == instruccionesDebugger.length) {
         detenerDebugger();
     } else {
@@ -77,6 +77,7 @@ function continuarDebugger() {
     }
     actualizarStack();
     actualizarHeap();
+    actualizarSimbolos();
     if (tabla.indiceDebugger == instruccionesDebugger.length) {
         detenerDebugger();
     }
@@ -85,7 +86,8 @@ function continuarDebugger() {
 window.addEventListener('click', function(evt) {
     if (evt.detail === 2) {
         var linea = editor4D.getCursor().line;
-        if (editor4D.doc.children[0].lines[linea].bgClass != undefined) {
+        var containsStyle = getLinePropertyCodeMirror(editor4D.doc, linea);
+        if (containsStyle.result) {
             editor4D.removeLineClass(linea, 'background', 'clase4dcss1');
         } else {
             editor4D.addLineClass(linea, 'background', 'clase4dcss1');
@@ -95,22 +97,71 @@ window.addEventListener('click', function(evt) {
 
 function actualizarStack() {
     //tabla
-    var cabecera = '<tr><th colspan="2" scope="colgroup">Stack</th></tr>'
+    var cabecera = '<tr><th scope="colgroup">Stack</th><th scope="colgroup">' + tabla.getItem('p') + '</th></tr>'
     cabecera += '<tr><th>Direccion</th><th>Valor</th></tr>';
     var body = ''
     for (var i = 0; i < tabla.stack.length; i++) {
         body += '<tr><td>' + i + '</td><td>' + tabla.stack[i] + '</td></tr>';
     }
+    //document.getElementById('tablaStack').innerHTML = '<th colspan="2" scope="colgroup">' + tabla.getItem('p') + '</th>' + cabecera + body;
     document.getElementById('tablaStack').innerHTML = cabecera + body;
+
 }
 
 function actualizarHeap() {
     //tabla
-    var cabecera = '<tr><th colspan="2" scope="colgroup">Heap</th></tr>'
-    cabecera += '<tr><th>Direccion</th><th>Valor</th></tr>';
+    var cabecera = '<tr><th colspan="2" scope="colgroup">Heap</th><th colspan="2" scope="colgroup">' + tabla.getItem('h') + '</th></tr>'
+    cabecera += '<tr><th>Direccion</th><th>Valor</th><th>Ascii</th></tr>';
     var body = ''
     for (var i = 0; i < tabla.heap.length; i++) {
-        body += '<tr><td>' + i + '</td><td>' + tabla.heap[i] + '</td></tr>';
+        body += '<tr><td>' + i + '</td><td>' + tabla.heap[i] + '</td><td><center>' + String.fromCharCode(tabla.heap[i]) + '</center></td></tr>';
     }
     document.getElementById('tablaHeap').innerHTML = cabecera + body;
+}
+
+function actualizarSimbolos() {
+    //tabla
+    var cabecera = '<tr><th colspan="2" scope="colgroup">Simbolos</th></tr>'
+    cabecera += '<tr><th>Nombre</th><th>Valor</th></tr>';
+    var body = ''
+    for (var i = 0; i < tabla.tabla.length; i++) {
+        let simbolo;
+        simbolo = this.tabla.tabla[i];
+        body += '<tr><td>' + simbolo.Identificador + '</td><td>' + simbolo.Valor + '</td></tr>';
+    }
+    document.getElementById('tablaSimbolos').innerHTML = cabecera + body;
+}
+
+function getLinePropertyCodeMirror(nodo, linea, contadorLineas = 0, verificar = true) {
+    if (nodo.children != undefined) {
+        for (var i = 0; i < nodo.children.length; i++) {
+            var m = nodo.children[i];
+            var result = getLinePropertyCodeMirror(m, linea, contadorLineas, verificar);
+            if (result.result) {
+                return { result: result.result, contadorLineas: result.contadorLineas, verificar: true };
+            }
+            contadorLineas = result.contadorLineas;
+            verificar = result.verificar;
+            if (!verificar) {
+                return { result: result.result, contadorLineas: result.contadorLineas, verificar: false };
+            }
+        }
+    } else {
+        //if (nodo.lines.includes(linea)) {
+        contadorLineas += nodo.lines.length;
+        if (linea < contadorLineas && verificar) {
+            var lineaAcceso = linea - (contadorLineas - nodo.lines.length);
+            var lineaEvaluar = nodo.lines[lineaAcceso];
+            var contienePropiedad = lineaEvaluar.bgClass != undefined;
+            return {
+                result: contienePropiedad,
+                contadorLineas: contadorLineas,
+                verificar: false
+            };
+        } else {
+            return { result: false, contadorLineas: contadorLineas, verificar: true };
+        }
+
+    }
+    return { result: false, contadorLineas: contadorLineas, verificar: true };
 }

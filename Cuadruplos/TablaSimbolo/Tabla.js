@@ -7,7 +7,7 @@ class Tabla {
         this.isDebugger = false;
         this.indiceDebugger = 0;
         this.listaRetornosCall = [];
-        this.InsertUpdate("h", this.heap.lenght - 1);
+        this.InsertUpdate("h", 0);
         this.InsertUpdate("p", 0);
     }
     InsertUpdate(id, valor) {
@@ -37,9 +37,9 @@ class Tabla {
     }
 
     getItem(id) {
-        if (id.toLowerCase() == "h") {
-            return heap.lenght - 1;
-        }
+        //if (id.toLowerCase() == "h") {
+        //    return this.heap.length;
+        //}
         var i = 0;
         for (i = 0; i < this.tabla.length; i++) {
             let simbolo;
@@ -65,10 +65,22 @@ class Tabla {
 
     setHeap(posicion, valor) {
         this.heap[posicion] = valor;
+        for (var i = 0; i < this.heap.length; i++) {
+            let m = this.heap[i];
+            if (m == undefined || m == NaN || m == null) {
+                this.heap[i] = -1;
+            }
+        }
     }
 
     setStack(posicion, valor) {
         this.stack[posicion] = valor;
+        for (var i = 0; i < this.stack.length; i++) {
+            let m = this.stack[i];
+            if (m == undefined || m == NaN || m == null) {
+                this.stack[i] = -1;
+            }
+        }
     }
 
     getHeap(posicion) {

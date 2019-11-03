@@ -3,7 +3,7 @@
 
 %options case-insensitive
 identificador   [Ñña-zA-Z_][Ñña-zA-Z0-9_]*
-entero (-)?([0-9])+
+entero '-'([0-9])+|([0-9])+
 decimal (-)?([0-9])+'.'([0-9])+
 %%
 \s+                   /* skip whitespace */
@@ -94,7 +94,7 @@ SALTOS : CONDICIONAL {$$ = $1;}
 CONDICIONAL : salto ',' ',' ',' etiqueta {$$ = new SaltoCondicional($5, yylineno + 1, _$[_$.length - 1].last_column + 1);} 
             ;
 
-INCONDICIONAL : TIPOSALTO ',' temporal ',' temporal ',' etiqueta {$$ = new SaltoIncondicional($1, new Identificador($3), new Identificador($5), $7, yylineno + 1, _$[_$.length - 1].last_column + 1);} 
+INCONDICIONAL : TIPOSALTO ',' VALOR ',' VALOR ',' etiqueta {$$ = new SaltoIncondicional($1, $3, $5, $7, yylineno + 1, _$[_$.length - 1].last_column + 1);} 
             ;
 
 ETIQUETA : etiqueta ':' {$$ = new Etiqueta($1, yylineno + 1, _$[_$.length - 1].last_column + 1);}

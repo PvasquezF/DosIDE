@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/Css/bootstrap.css">
     <link rel="stylesheet" href="/Css/main.css">
     <link href="https://fonts.googleapis.com/css?family=Mansalva&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Slabo+27px&display=swap" rel="stylesheet">
 </head>
 
 <body id="cuerpo" class="cuerpo">
@@ -24,9 +25,9 @@
             <div id="pestañasEditor" class="row_layout menu">
                 <center>
                     <button id="img-button" class="tablinks" onclick="openTabEditor(event, 'dosIde', editor, true, this)">
-                        <img style="width: 40px;"src="resources/Translate.png"></button>
+                        <img style="width: 40px;" src="resources/Translate.png"></button>
                     <button id="img-button" class="tablinks" onclick="openTabEditor(event, 'cuadruplos', editor, true, this)">
-                        <img style="width: 40px;"src="resources/4D.png"></button></center>
+                        <img style="width: 40px;" src="resources/4D.png"></button></center>
             </div>
         </div>
     </div>
@@ -46,9 +47,9 @@
                         <h1>Traducción</h1>
                     </center>
                     <button id="buttonTranslate" onclick="Traducir()">Traducir</button>
-                    <br/>
+                    <br />
                     <button id="buttonErrors" onclick="MostrarErrores()">Reporte errores</button>
-                    <br/>
+                    <br />
                     <button id="buttonTsim" onclick="MostrarSimbolos()">Tabla de simbolos</button>
                 </div>
             </div>
@@ -64,9 +65,9 @@
                 <button class="btnDebugger" onclick="continuarInstruccion()" style="display: none;">Paso a paso</button>
                 <button class="btnDebugger" style="display: none;" onclick="detenerDebugger()">Detener</button>
             </div>
-            <br/>
+            <br />
             <div class="column_layout">
-                <div style="width: 415px;">
+                <div style="width: 300px;">
                     <div id="AreaTexto">
                         <textarea id="textarea4d" name="textarea4d"></textarea>
                     </div>
@@ -81,7 +82,11 @@
                         <center>
                             <table id="tablaStack" style="width:100%">
                                 <tr>
-                                    <th colspan="2" scope="colgroup">Stack</th>
+                                    <th scope="colgroup">Stack</th>
+                                    <th scope="colgroup"></th>
+                                </tr>
+                                <tr id="filaStack">
+
                                 </tr>
                                 <tr>
                                     <th>Direccion</th>
@@ -96,9 +101,24 @@
                             <table id="tablaHeap" style="width:100%">
                                 <tr>
                                     <th colspan="2" scope="colgroup">Heap</th>
+                                    <th colspan="2" scope="colgroup"></th>
                                 </tr>
                                 <tr>
                                     <th>Direccion</th>
+                                    <th>Valor</th>
+                                    <th>Ascii</th>
+                                </tr>
+                            </table>
+                        </center>
+                    </div>
+                    <div id="panelSimbolos" class="column_layout">
+                        <center>
+                            <table id="tablaSimbolos" style="width:100%">
+                                <tr>
+                                    <th colspan="2" scope="colgroup">Simbolos</th>
+                                </tr>
+                                <tr>
+                                    <th>Nombre</th>
                                     <th>Valor</th>
                                 </tr>
                             </table>

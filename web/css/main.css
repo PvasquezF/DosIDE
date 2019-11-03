@@ -149,11 +149,11 @@
 
 #panelDebugger {
     background-color: blue;
-    left: 420px;
-    width: 430px;
+    left: 300px;
+    width: 635px;
     height: 490px;
     position: relative;
-    font-family: 'Mansalva', cursive;
+    font-family: 'Slabo 27px', serif;
     overflow: auto;
 }
 
@@ -169,9 +169,19 @@
 #panelHeap {
     background-color: pink;
     width: 200px;
-    top: 20px;
     left: 20px;
+    top: 20px;
     position: relative;
+    overflow: auto;
+}
+
+#panelSimbolos {
+    background-color: pink;
+    width: 200px;
+    left: 30px;
+    top: 20px;
+    position: relative;
+    overflow: auto;
 }
 
 #img-button {
@@ -209,9 +219,9 @@ td {
 }
 
 .consola {
-    left: 850px;
+    left: 940px;
     height: 490px;
-    width: 480px;
+    width: 400px;
     border-style: solid;
     border-radius: 5px;
     border-width: 2px;

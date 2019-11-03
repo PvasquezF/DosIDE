@@ -6,8 +6,6 @@ function ejecutar4D() {
     var tabla;
     this.tabla = new Tabla(null);
     this.tabla.isDebugger = false;
-    console.log(result.instrucciones);
-    console.log(this.tabla);
 
     for (indexInstruccion = 0; indexInstruccion < result.instrucciones.length; indexInstruccion++) {
         if (result.instrucciones[indexInstruccion] instanceof Etiqueta ||
@@ -19,7 +17,6 @@ function ejecutar4D() {
     }
 
     for (indexInstruccion = 0; indexInstruccion < result.instrucciones.length; indexInstruccion++) {
-        //console.log(JSON.parse(JSON.stringify(this.tabla)));
         if (result.instrucciones[indexInstruccion] instanceof Etiqueta) {
             continue;
         }
@@ -66,8 +63,6 @@ function debugear4D() {
     var indexInstruccion = 0;
     tabla = new Tabla(null);
     instruccionesDebugger = result.instrucciones;
-    console.log(instruccionesDebugger);
-    console.log(this.tabla);
     for (indexInstruccion = 0; indexInstruccion < instruccionesDebugger.length; indexInstruccion++) {
         if (instruccionesDebugger[indexInstruccion] instanceof Etiqueta ||
             instruccionesDebugger[indexInstruccion] instanceof IniciarMetodo ||
@@ -78,7 +73,8 @@ function debugear4D() {
     }
     listaBreakpoints = [];
     for (var i = 0; i < editor4D.lineCount(); i++) {
-        if (editor4D.doc.children[0].lines[i].bgClass != undefined) {
+        var containsStyle = getLinePropertyCodeMirror(editor4D.doc, i);
+        if (containsStyle.result) {
             if (!listaBreakpoints.includes(i + 1)) {
                 listaBreakpoints.push(i + 1);
                 listaBreakpoints.sort();

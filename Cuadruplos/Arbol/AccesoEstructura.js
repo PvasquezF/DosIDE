@@ -13,7 +13,7 @@ class AccesoEstructura {
         if (this.Estructura.toLowerCase() == "stack") {
             value = tabla.getStack(dir)
         } else {
-            value = tabla.setHeap(dir);
+            value = tabla.getHeap(dir);
         }
         tabla.InsertUpdate(mem, value);
         return null;
