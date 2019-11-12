@@ -4,6 +4,7 @@ class Print {
         this.Valor = Valor;
         this.fila = fila;
         this.columna = columna;
+        this.assembler = '';
     }
     Ejecutar(tabla) {
         let value = this.Valor.Ejecutar(tabla);

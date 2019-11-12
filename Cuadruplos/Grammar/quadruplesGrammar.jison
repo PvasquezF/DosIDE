@@ -4,7 +4,7 @@
 %options case-insensitive
 identificador   [Ñña-zA-Z_][Ñña-zA-Z0-9_]*
 entero '-'([0-9])+|([0-9])+
-decimal (-)?([0-9])+'.'([0-9])+
+decimal '-'?([0-9])+'.'([0-9])+
 %%
 \s+                   /* skip whitespace */
 '//'.*                                   //'.*      /* skip comment */
@@ -110,7 +110,7 @@ METODO : begin ',' ',' ',' identificador INSTRUCCIONES end ',' ',' ',' identific
        ;
 
 LLAMADA : llamada ',' ',' ',' identificador {$$ = new Llamada($5, yylineno + 1, _$[_$.length - 1].last_column + 1);}    
-        | llamada ',' ',' ',' invalue {$$ = $1 +$2 + $3 + $4 + $5;}  
+        | llamada ',' ',' ',' invalue {$$ = new Invalue(yylineno + 1, _$[_$.length - 1].last_column + 1);}  
         ;
 
 PRINT : imprimir '(' PARAMETROPRINT ',' VALOR ')' {$$ = new Print($3, $5, yylineno + 1, _$[_$.length - 1].last_column + 1);}  
@@ -134,7 +134,7 @@ TIPOSALTO : je {$$ = $1;}
           ;
 
 VALOR : entero {$$ = new Primitivo(Number($1), yylineno + 1, _$[_$.length - 1].last_column + 1);}
-      | decimal {$$ = new Primitivo(Number($1), yylineno + 1, _$[_$.length - 1].last_column + 1);}
+      | decimal {console.log(type of $1); $$ = new Primitivo(Number($1), yylineno + 1, _$[_$.length - 1].last_column + 1);}
       | VARIABLE {$$ = $1;}
       ;
 
