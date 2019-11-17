@@ -8,5 +8,10 @@ class SaltoCondicional {
         let value = tabla.getItem(this.Identificador);
         return value;
     }
+    getAssembler(tabla) {
+        let codigo = 'jmp ' + this.Identificador + '\n';
+        tabla.setAssembler(codigo);
+        return null;
+    }
 }
 exports.SaltoCondicional = SaltoCondicional;

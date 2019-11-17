@@ -8,5 +8,9 @@ class Identificador {
         let value = tabla.getItem(this.Nombre);
         return value;
     }
+
+    getAssembler(tabla) {
+        return this.Nombre;
+    }
 }
 exports.Identificador = Identificador;

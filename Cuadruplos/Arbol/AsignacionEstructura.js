@@ -16,5 +16,26 @@ class AsignacionEstructura {
         }
         return null;
     }
+    getAssembler(tabla) {
+        let codigo = '';
+        let temp1 = this.Valor.getAssembler(tabla);
+        let temp2 = this.Direccion.getAssembler(tabla);
+        //codigo += '; __________________ASIGNACION ESTRUCTURA___________________\n';
+        codigo += 'xor si,si\n';
+        codigo += 'xor ax,ax\n';
+        codigo += 'mov si, ' + temp2 + '\n';
+        codigo += 'add si,si\n';
+        if (this.Estructura.toLowerCase() == "stack") {
+            codigo += 'mov ax, ' + temp1 + '\n';
+            codigo += 'mov pila[si], ax\n';
+        } else {
+            codigo += 'mov ax, ' + temp1 + '\n';
+            codigo += 'mov heap[si], ax\n';
+        }
+        codigo += 'limpiarReg\n';
+        //codigo += '; __________________FIN ASIGNACION ESTRUCTURA___________________\n';
+        tabla.setAssembler(codigo);
+        return null;
+    }
 }
 exports.AsignacionEstructura = AsignacionEstructura;

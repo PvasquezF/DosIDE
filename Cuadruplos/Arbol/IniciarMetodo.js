@@ -15,5 +15,15 @@ class IniciarMetodo {
         }
         return null;
     }
+
+
+    getAssembler(tabla) {
+        let codigo = '';
+        tabla.isProc = true;
+        codigo += 'jmp fin_metodo_' + this.Identificador + '\n';
+        codigo += this.Identificador + ' proc\n';
+        tabla.setAssembler(codigo);
+        return null;
+    }
 }
 exports.IniciarMetodo = IniciarMetodo;

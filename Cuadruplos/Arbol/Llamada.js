@@ -14,5 +14,11 @@ class Llamada {
         let index = tabla.getItem(this.Identificador);
         return index;
     }
+    getAssembler(tabla) {
+        let codigo = '';
+        codigo += 'call ' + this.Identificador + '\n';
+        tabla.setAssembler(codigo);
+        return null;
+    }
 }
 exports.Llamada = Llamada;

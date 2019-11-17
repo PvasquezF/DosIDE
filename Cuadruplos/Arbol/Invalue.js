@@ -13,7 +13,7 @@ class Invalue {
         let tipoEntrada = tabla.getStack(inicioAmbito + 1); // 0 - int, 1 - string
         let posicionDondeGuardar = tabla.getStack(inicioAmbito + 2);
         let tipoVariable = tabla.getStack(inicioAmbito + 3); // 0 - stack, 1 - heap
-        console.log(typeof entradaUsuario);
+
         if (tipoEntrada == 0) {
             if (!isNaN(entradaUsuario)) { // not (Is not a number)
                 if (tipoVariable == 0) {
@@ -44,7 +44,13 @@ class Invalue {
                 console.log("Error de tipos");
             }
         }
+        return null;
+    }
 
+    getAssembler(tabla) {
+        let codigo = '';
+        codigo += 'call Invalue\n';
+        tabla.setAssembler(codigo);
         return null;
     }
 }

@@ -10,5 +10,15 @@ class Asignacion {
         tabla.InsertUpdate(this.Identificador.Nombre, value);
         return null;
     }
+
+    getAssembler(tabla) {
+        let codigo = '';
+        let temp1 = this.Valor.getAssembler(tabla);
+        codigo += 'mov ax, ' + temp1 + '\n';
+        codigo += 'mov ' + tabla.genTemporal(this.Identificador.Nombre) + ', ax\n';
+        codigo += 'limpiarReg\n';
+        tabla.setAssembler(codigo);
+        return null;
+    }
 }
 exports.Asignacion = Asignacion;

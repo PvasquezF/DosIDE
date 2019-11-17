@@ -8,5 +8,10 @@ class Etiqueta {
         tabla.InsertUpdate(this.Identificador, this.index);
         return null;
     }
+    getAssembler(tabla) {
+        let codigo = this.Identificador + ':\n';
+        tabla.setAssembler(codigo);
+        return null;
+    }
 }
 exports.Etiqueta = Etiqueta;

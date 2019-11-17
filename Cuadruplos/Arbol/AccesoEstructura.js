@@ -18,5 +18,25 @@ class AccesoEstructura {
         tabla.InsertUpdate(mem, value);
         return null;
     }
+    getAssembler(tabla) {
+        let codigo = '';
+        let temp1 = this.Direccion.getAssembler(tabla);
+        let mem = this.Memoria.Nombre;
+        //codigo += '; __________________ACCESO ESTRUCTURA___________________\n';
+        codigo += 'xor si,si\n';
+        codigo += 'xor ax,ax\n';
+        codigo += 'mov si, ' + temp1 + '\n';
+        codigo += 'add si,si\n';
+        if (this.Estructura.toLowerCase() == "stack") {
+            codigo += 'mov ax, pila[si]\n';
+        } else {
+            codigo += 'mov ax, heap[si]\n';
+        }
+        codigo += 'mov ' + tabla.genTemporal(mem) + ', ax\n';
+        codigo += 'limpiarReg\n';
+        //codigo += '; __________________FIN ACCESO ESTRUCTURA___________________\n';
+        tabla.setAssembler(codigo);
+        return null;
+    }
 }
 exports.AccesoEstructura = AccesoEstructura;

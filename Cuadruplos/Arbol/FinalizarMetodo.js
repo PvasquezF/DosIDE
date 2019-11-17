@@ -9,5 +9,13 @@ class FinalizarMetodo {
         //tabla.InsertUpdate(this.Identificador, value);
         return value;
     }
+    getAssembler(tabla) {
+        let codigo = '';
+        codigo += 'ret\n' + this.Identificador + ' endp\n';
+        codigo += 'fin_metodo_' + this.Identificador + ':\n';
+        tabla.setAssembler(codigo);
+        tabla.isProc = false;
+        return null;
+    }
 }
 exports.FinalizarMetodo = FinalizarMetodo;

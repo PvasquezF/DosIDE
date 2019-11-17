@@ -7,5 +7,14 @@ class Primitivo {
     Ejecutar(tabla) {
         return this.Valor;
     }
+
+    getAssembler(tabla) {
+        let codigo = '';
+        let temp1 = tabla.getTemporal();
+        codigo += 'mov ' + temp1 + ', ' + this.Valor + '\n';
+        codigo += 'limpiarReg\n';
+        tabla.setAssembler(codigo);
+        return temp1;
+    }
 }
 exports.Primitivo = Primitivo;
