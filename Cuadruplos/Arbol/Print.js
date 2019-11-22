@@ -26,14 +26,25 @@ class Print {
             codigo += 'mov ax, ' + temp1 + '\n';
             codigo += 'printChar al\n';
         } else if (this.Parametro.toLowerCase() == "%d") {
-            document.getElementById("consolaArea").value += parseFloat(value + "").toFixed(2);
+            codigo += 'imprimirNumero ' + temp1 + '\n';
         } else {
-            codigo += 'mov ax,' + temp1 + '\n';
-            codigo += 'call intToStringPrint\n';
+            //codigo += 'mov ax,' + temp1 + '\n';
+            codigo += 'imprimirNumero ' + temp1 + '\n';
         }
         codigo += 'limpiarReg\n';
         tabla.setAssembler(codigo);
         return null;
+    }
+    getOptimizacion() {
+        let codigo = '';
+        if (this.Parametro.toLowerCase() == "%c") {
+            codigo += 'print(%c,' + this.Valor.getOptimizacion() + ')\n';
+        } else if (this.Parametro.toLowerCase() == "%d") {
+            codigo += 'print(%d,' + this.Valor.getOptimizacion() + ')\n';
+        } else {
+            codigo += 'print(%e,' + this.Valor.getOptimizacion() + ')\n';
+        }
+        return codigo;
     }
 }
 exports.Print = Print;

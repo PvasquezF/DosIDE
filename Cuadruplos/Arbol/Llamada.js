@@ -20,5 +20,10 @@ class Llamada {
         tabla.setAssembler(codigo);
         return null;
     }
+    getOptimizacion() {
+        let codigo = '';
+        codigo += 'call,,,' + this.Identificador + '\n';
+        return codigo;
+    }
 }
 exports.Llamada = Llamada;

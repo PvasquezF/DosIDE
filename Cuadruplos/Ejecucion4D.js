@@ -1,5 +1,8 @@
 function ejecutar4D() {
-    // @ts-ignore
+    if (!editor4D.getValue()) {
+        alert("NO HAY NADA PARA ANALIZAR");
+        return;
+    }
     var result = quadruplesGrammar.parse(editor4D.getValue());
     document.getElementById("consolaArea").value = "";
     var indexInstruccion = 0;

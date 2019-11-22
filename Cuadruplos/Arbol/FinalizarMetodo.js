@@ -17,5 +17,10 @@ class FinalizarMetodo {
         tabla.isProc = false;
         return null;
     }
+    getOptimizacion() {
+        let codigo = '';
+        codigo += 'end,,,' + this.Identificador + '\n';
+        return codigo;
+    }
 }
 exports.FinalizarMetodo = FinalizarMetodo;

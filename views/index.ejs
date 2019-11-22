@@ -7,27 +7,31 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Dos IDE</title>
     <link rel="stylesheet" href="/Css/codemirror.css">
-    <link rel="stylesheet" href="/Css/dracula.css">
+    <link rel="stylesheet" href="/Css/isotope.css">
     <link rel="stylesheet" href="/Css/bootstrap.css">
     <link rel="stylesheet" href="/Css/main.css">
-    <link href="https://fonts.googleapis.com/css?family=Mansalva&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Slabo+27px&display=swap" rel="stylesheet">
 </head>
 
 <body id="cuerpo" class="cuerpo">
-    <center>
-        <a>
-            <h5>DosIDE</h5>
-        </a>
-    </center>
-    <div class="row_layout">
-        <div class="column_layout" style="position: relative; width: 100%; background: red;">
-            <div id="pestañasEditor" class="row_layout menu">
-                <center>
-                    <button id="img-button" class="tablinks" onclick="openTabEditor(event, 'dosIde', editor, true, this)">
+    <div id="pestañasEditor">
+        <center>
+            <a>
+                <h5 style="color: rgb(255, 255, 255);">DosIDE</h5>
+            </a>
+        </center>
+        <div class="row_layout">
+            <div class="column_layout" style="position: relative; width: 100%;">
+                <div id="pestañasEditor" class="row_layout menu">
+                    <center>
+                        <button id="img-button" class="tablinks" onclick="openTabEditor(event, 'dosIde', editor, true, this)">
                         <img style="width: 40px;" src="resources/Translate.png"></button>
-                    <button id="img-button" class="tablinks" onclick="openTabEditor(event, 'cuadruplos', editor, true, this)">
-                        <img style="width: 40px;" src="resources/4D.png"></button></center>
+                        <button id="img-button" class="tablinks" onclick="openTabEditor(event, 'cuadruplos', editor, true, this)">
+                        <img style="width: 40px;" src="resources/4D.png"></button>
+                        <button id="buttonTranslate" class="img-buttonTranslate" onclick="Traducir()">
+                        <img style="width: 40px;" src="resources/play-button.png"></button>
+                    </center>
+                </div>
             </div>
         </div>
     </div>
@@ -35,7 +39,7 @@
     <div class="row_layout">
         <div id="dosIde" class="tabEditor">
             <div class="column_layout">
-                <div style="width: 900px;">
+                <div style="width: 400px;">
                     <div id="AreaTexto">
                         <textarea id="myTextarea" name="myTextarea"></textarea>
                     </div>
@@ -43,27 +47,65 @@
             </div>
             <div class="column_layout">
                 <div id="panelTraduccion">
-                    <center>
-                        <h1>Traducción</h1>
-                    </center>
-                    <button id="buttonTranslate" onclick="Traducir()">Traducir</button>
-                    <br />
-                    <button id="buttonErrors" onclick="MostrarErrores()">Reporte errores</button>
-                    <br />
-                    <button id="buttonTsim" onclick="MostrarSimbolos()">Tabla de simbolos</button>
+                    <div id="row_pestañas" class="row_layout pestañas">
+                        <div id="tab" class="tab">
+                            <button class="tablinks" id="btnSimbolos" onclick="openTab(event, 'Simbolos')">Tabla de simbolos</button>
+                            <button class="tablinks" onclick="openTab(event, 'Errores')">Errores</button>
+                            <button class="tablinks" onclick="openTab(event, 'Optimizacion')">Optimización</button>
+                        </div>
+                        <div id="Simbolos" class="tabcontent">
+                            <table class="table table-striped table-light" style="height: 100%;">
+                                <tr style="height: 40px;">
+                                    <th scope="col">No</th>
+                                    <th scope="col">Identificador</th>
+                                    <th scope="col">Tipo Primitivo</th>
+                                    <th scope="col">Tipo Generado</th>
+                                    <th scope="col">Ambito</th>
+                                    <th scope="col">Constante</th>
+                                    <th scope="col">Rol</th>
+                                    <th scope="col">Parametros</th>
+                                    <th scope="col">Apuntador</th>
+                                    <th scope="col">Tamaño</th>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div id="Errores" class="tabcontent">
+                            <table class="table table-striped table-light" style="height: 100%;">
+                                <tr style="height: 40px;">
+                                    <th scope="col">No</th>
+                                    <th scope="col">Descripcion</th>
+                                    <th scope="col">Tipo</th>
+                                    <th scope="col">Fila</th>
+                                    <th scope="col">Columna</th>
+                                </tr>
+                            </table>
+                        </div>
+                        <div id="Optimizacion" class="tabcontent">
+                            <table class="table table-striped table-light" style="height: 100%;">
+                                <tr style="height: 40px;">
+                                    <th scope="col">No</th>
+                                    <th scope="col">Expresion</th>
+                                    <th scope="col">Resultado</th>
+                                    <th scope="col">Regla aplicado</th>
+                                    <th scope="col">Fila</th>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <div id="cuadruplos" class="tabEditor">
             <div class="row_layout" style="width: 1000px;">
-                <button onclick="ejecutar4D()">Ejecutar</button>
-                <button>Optimización</button>
-                <button id="btnActivarDebugger" onclick="activarDebugger()">Debugger</button>
-                <button onclick="removeBreakpoints()">Quitar breakpoints</button>
-                <button onclick="btnGenAssembler()">Generar Assembler</button>
-                <button class="btnDebugger" onclick="continuarDebugger()" style="display: none;">Continuar</button>
-                <button class="btnDebugger" onclick="continuarInstruccion()" style="display: none;">Paso a paso</button>
-                <button class="btnDebugger" style="display: none;" onclick="detenerDebugger()">Detener</button>
+                <button onclick="ejecutar4D()" class="btn btn-success">Ejecutar</button>
+                <button onclick="Optimizar()" class="btn btn-primary">Optimización</button>
+                <button id="btnActivarDebugger" onclick="activarDebugger()" class="btn btn-primary">Debugger</button>
+                <button class="btn btn-danger" onclick="removeBreakpoints()">Quitar breakpoints</button>
+                <button class="btn btn-dark" onclick="btnGenAssembler()">Generar Assembler</button>
+                <button class="btnDebugger btn btn-warning" onclick="continuarDebugger()" style="display: none;">Continuar</button>
+                <button class="btnDebugger btn btn-info" onclick="continuarInstruccion()" style="display: none;">Paso a paso</button>
+                <button class="btnDebugger btn btn-danger" style="display: none;" onclick="detenerDebugger()">Detener</button>
             </div>
             <br />
             <div class="column_layout">
@@ -137,21 +179,22 @@
     <script src="/Js/Jquery.js"></script>
     <script src="/Js/bootstrap.js"></script>
     <script src="/Mode/javascript/javascript.js"></script>
+    <script src="/Mode/pascal/pascal.js"></script>
     <script>
         var editor = CodeMirror.fromTextArea(myTextarea, {
             lineNumbers: true,
-            mode: "javascript",
-            theme: "dracula"
+            mode: "pascal",
+            theme: "isotope"
         });
-        editor.setSize(null, 520);
+        editor.setSize(null, 550);
     </script>
     <script>
         var editor4D = CodeMirror.fromTextArea(textarea4d, {
             lineNumbers: true,
             mode: "javascript",
-            theme: "dracula"
+            theme: "isotope"
         });
-        editor4D.setSize(null, 490);
+        editor4D.setSize(null, 480);
     </script>
 
     <script src="/Js/main.js"></script>
@@ -181,8 +224,10 @@
     <script src="/Debugger4D.js"></script>
     <script src="/Js/Traducir.js"></script>
     <script src="/GeneracionASM.js"></script>
+    <script src="/Optimizacion.js"></script>
     <script>
         $('#img-button')[0].click()
+        $('#btnSimbolos')[0].click()
     </script>
 </body>
 

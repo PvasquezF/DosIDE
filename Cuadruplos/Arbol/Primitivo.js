@@ -16,5 +16,10 @@ class Primitivo {
         tabla.setAssembler(codigo);
         return temp1;
     }
+    getOptimizacion() {
+        let codigo = '';
+        codigo += this.Valor;
+        return codigo;
+    }
 }
 exports.Primitivo = Primitivo;

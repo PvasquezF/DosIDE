@@ -28,15 +28,21 @@ class AccesoEstructura {
         codigo += 'mov si, ' + temp1 + '\n';
         codigo += 'add si,si\n';
         if (this.Estructura.toLowerCase() == "stack") {
-            codigo += 'mov ax, pila[si]\n';
+            codigo += 'mov ax, es:pila[si]\n';
         } else {
-            codigo += 'mov ax, heap[si]\n';
+            codigo += 'mov ax, es:heap[si]\n';
         }
         codigo += 'mov ' + tabla.genTemporal(mem) + ', ax\n';
         codigo += 'limpiarReg\n';
         //codigo += '; __________________FIN ACCESO ESTRUCTURA___________________\n';
         tabla.setAssembler(codigo);
         return null;
+    }
+
+    getOptimizacion() {
+        let codigo = '';
+        codigo += '=,' + this.Estructura + ',' + this.Direccion.getOptimizacion() + ',' + this.Memoria.Nombre + '\n';
+        return codigo;
     }
 }
 exports.AccesoEstructura = AccesoEstructura;

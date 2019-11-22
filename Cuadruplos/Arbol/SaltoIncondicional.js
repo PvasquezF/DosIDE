@@ -68,5 +68,27 @@ class SaltoIncondicional {
         tabla.setAssembler(codigo);
         return null;
     }
+
+    getOptimizacion() {
+        let cond1 = this.valor1.getOptimizacion();
+        let cond2 = this.valor2.getOptimizacion();
+        let value = this.salto;
+        let codigo = '';
+        if (this.tipo.toLowerCase() == "je") {
+            codigo += 'je,' + cond1 + ',' + cond2 + ',' + value + '\n';
+        } else if (this.tipo.toLowerCase() == "jne") {
+            codigo += 'jne,' + cond1 + ',' + cond2 + ',' + value + '\n';
+        } else if (this.tipo.toLowerCase() == "jg") {
+            codigo += 'jg,' + cond1 + ',' + cond2 + ',' + value + '\n';
+        } else if (this.tipo.toLowerCase() == "jl") {
+            codigo += 'jl,' + cond1 + ',' + cond2 + ',' + value + '\n';
+        } else if (this.tipo.toLowerCase() == "jge") {
+            codigo += 'jge,' + cond1 + ',' + cond2 + ',' + value + '\n';
+        } // else if (this.tipo.toLowerCase() == "jle") {
+        else {
+            codigo += 'jle,' + cond1 + ',' + cond2 + ',' + value + '\n';
+        }
+        return codigo;
+    }
 }
 exports.SaltoIncondicional = SaltoIncondicional;

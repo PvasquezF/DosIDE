@@ -3,7 +3,7 @@
 }
 
 #cuerpo {
-    background-color: #d2c6f3;
+    background-color: #e0e0e0;
 }
 
 .column_layout {
@@ -24,19 +24,17 @@
 }
 
 .menu {
-    width: 200px;
-    left: 50%;
-    margin-left: -100px;
+    width: 100%;
     position: absolute;
 }
 
 .pestañas {
     border-style: solid;
     border-radius: 5px;
-    height: 243px;
-    width: 1050px;
+    height: 550px;
+    width: 930px;
     position: relative;
-    top: 10px;
+    top: 0px;
 }
 
 .PaquetesRecibidos {
@@ -50,7 +48,7 @@
     border-radius: 5px;
     border-width: 2px;
     background-color: black;
-    color: greenyellow;
+    color: rgb(255, 255, 255);
     resize: none;
 }
 
@@ -121,7 +119,7 @@
     display: none;
     border: 1px solid #ccc;
     border-top: none;
-    height: 86%;
+    height: 94%;
     width: 100%;
 }
 
@@ -139,49 +137,50 @@
 }
 
 #panelTraduccion {
-    background-color: blue;
-    left: 920px;
-    width: 410px;
-    height: 520px;
+    left: 420px;
+    width: 930px;
+    height: 550px;
     position: relative;
-    font-family: 'Mansalva', cursive;
+    font-family: 'Slabo 27px', serif;
 }
 
 #panelDebugger {
-    background-color: blue;
     left: 300px;
     width: 635px;
-    height: 490px;
+    height: 480px;
     position: relative;
     font-family: 'Slabo 27px', serif;
     overflow: auto;
+    color: rgb(255, 255, 255);
+    background-color: black;
+    border: 1px solid rgb(255, 255, 255);
 }
 
 #panelStack {
-    background-color: green;
     width: 200px;
     left: 10px;
     top: 20px;
     position: relative;
     overflow: auto;
+    border: 1px solid rgb(255, 255, 255);
 }
 
 #panelHeap {
-    background-color: pink;
     width: 200px;
     left: 20px;
     top: 20px;
     position: relative;
     overflow: auto;
+    border: 1px solid rgb(252, 252, 252);
 }
 
 #panelSimbolos {
-    background-color: pink;
     width: 200px;
     left: 30px;
     top: 20px;
     position: relative;
     overflow: auto;
+    border: 1px solid rgb(255, 255, 255);
 }
 
 #img-button {
@@ -193,9 +192,13 @@
     outline: none;
 }
 
-#buttonTranslate {
-    left: 30px;
-    position: relative;
+.img-buttonTranslate {
+    background-color: Transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
 }
 
 #buttonErrors {
@@ -211,22 +214,26 @@
 table,
 th,
 td {
-    border: 1px solid black;
+    border: 1px solid rgb(255, 255, 255);
 }
 
 #cuadruplos {
     height: 500px;
 }
 
+#pestañasEditor {
+    background-color: black;
+}
+
 .consola {
     left: 940px;
-    height: 490px;
+    height: 480px;
     width: 400px;
     border-style: solid;
     border-radius: 5px;
     border-width: 2px;
     background-color: black;
-    color: greenyellow;
+    color: rgb(0, 195, 255);
     resize: none;
     position: relative;
 }
@@ -237,4 +244,16 @@ td {
 
 .clase4dcss1 {
     background-color: green;
+}
+
+#Simbolos {
+    overflow: auto;
+}
+
+#Errores {
+    overflow: auto;
+}
+
+#Optimizacion {
+    overflow: auto;
 }

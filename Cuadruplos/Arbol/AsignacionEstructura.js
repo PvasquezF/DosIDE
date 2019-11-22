@@ -27,15 +27,21 @@ class AsignacionEstructura {
         codigo += 'add si,si\n';
         if (this.Estructura.toLowerCase() == "stack") {
             codigo += 'mov ax, ' + temp1 + '\n';
-            codigo += 'mov pila[si], ax\n';
+            codigo += 'mov es:pila[si], ax\n';
         } else {
             codigo += 'mov ax, ' + temp1 + '\n';
-            codigo += 'mov heap[si], ax\n';
+            codigo += 'mov es:heap[si], ax\n';
         }
         codigo += 'limpiarReg\n';
         //codigo += '; __________________FIN ASIGNACION ESTRUCTURA___________________\n';
         tabla.setAssembler(codigo);
         return null;
+    }
+
+    getOptimizacion() {
+        let codigo = '';
+        codigo += '=,' + this.Direccion.getOptimizacion() + ',' + this.Valor.getOptimizacion() + ',' + this.Estructura + '\n';
+        return codigo;
     }
 }
 exports.AsignacionEstructura = AsignacionEstructura;

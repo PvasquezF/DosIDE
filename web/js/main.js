@@ -53,4 +53,10 @@ function openTabEditor(evt, tabname) {
         }, 1);
         abriendoTabEditor4D = false;
     }
+
+    if (tabname.toLowerCase() == "doside") {
+        document.getElementById('buttonTranslate').style.display = "unset"
+    } else if (tabname.toLowerCase() == "cuadruplos") {
+        document.getElementById('buttonTranslate').style.display = "none";
+    }
 }

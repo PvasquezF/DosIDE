@@ -13,5 +13,11 @@ class Etiqueta {
         tabla.setAssembler(codigo);
         return null;
     }
+
+    getOptimizacion() {
+        let codigo = '';
+        codigo += this.Identificador + ':\n';
+        return codigo;
+    }
 }
 exports.Etiqueta = Etiqueta;

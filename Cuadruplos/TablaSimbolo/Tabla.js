@@ -140,14 +140,18 @@ class Tabla {
         codigo += 'xor si,si\n'
         codigo += 'endm\n\n'
 
+        codigo += this.macroImprimirString();
         codigo += '.model huge\n';
         codigo += '.stack 10000h\n';
+        codigo += '.fardata? ExtraSeg1  \n'
+        codigo += 'pila dw 15000 dup(0000h)\n'
+        codigo += 'heap dw 15000 dup(0000h)\n'
+        codigo += '.fardata? EndSeg\n'
         codigo += '.data\n';
-        codigo += 'pila dw 15000 dup(0000h)\n';
-        codigo += 'heap dw 15000 dup(0000h)\n';
         codigo += 'numeroLectura dw 0000h\n';
         codigo += 'posicionLectura dw 0000h\n';
         codigo += 'buffer dw 0000h\n';
+        codigo += 'i dw 0000h\n';
         let temp1 = this.getTemporal();
         let temp2 = this.getTemporal();
         let temp3 = this.getTemporal();
@@ -157,13 +161,15 @@ class Tabla {
             codigo += m + " dw 0\n";
         });
         codigo += '.code\n';
+        codigo += 'mov ax,ExtraSeg1\n';
+        codigo += 'mov es,ax\n\n';
         codigo += 'mov ax,@data\n';
         codigo += 'mov ds,ax\n\n';
 
 
         codigo += this.AssemblerGeneradoProcs;
         codigo += this.macroLecturaNumero();
-        codigo += this.macroImprimirString();
+        codigo += this.macroLecturaString();
 
         codigo += this.callInvalueFunction(temp1, temp2, temp3, temp4, temp5);
         //codigo += 'start:\n';
@@ -241,46 +247,62 @@ class Tabla {
         return codigo;
     }
 
+    macroLecturaString() {
+        let codigo = '';
+        codigo += 'jmp fin_metodo_leerString\n';
+        codigo += 'leerString proc\n';
+        codigo += 'mov bx,h\n';
+        codigo += 'mov numeroLectura,bx\n';
+        codigo += 'add bx,bx\n';
+        codigo += 'continuarLecturaString:\n'
+        codigo += 'leer\n'
+        codigo += 'cmp al, 13\n'
+        codigo += 'je SalirLeerString\n'
+        codigo += 'xor ah,ah\n'
+        codigo += 'mov es:heap[bx],ax\n';
+        codigo += 'inc h\n'
+        codigo += 'mov bx,h\n'
+        codigo += 'add bx,bx\n';
+        codigo += 'jmp continuarLecturaString\n'
+        codigo += 'jmp SalirLeerString\n'
+
+        codigo += 'SalirLeerString:'
+        codigo += 'ret\n';
+        codigo += 'leerString endp\n';
+        codigo += 'fin_metodo_leerString:\n';
+        return codigo;
+    }
 
     macroImprimirString() {
-        let codigo = '';
-        codigo += 'jmp fin_metodo_intToStringPrint\n';
-        codigo += 'intToStringPrint proc\n';
-        codigo += 'mov di, ax\n'
-        codigo += 'cmp di, 0ffffh\n'
-        codigo += 'jg reservarEspacio\n';
-        codigo += 'xor di,di\n';
-        codigo += 'mov di,-1\n';
-        codigo += 'neg ax\n'
-        codigo += 'reservarEspacio:\n';
-        codigo += '    mov [buffer+8],36    ; almacenamos $ en la posicion de memoria buffer + 1 \n';
-        codigo += '    lea si,[buffer+8]   ; guardamos la direccion de memoria de buffer + 1 en SI\n';
-        codigo += '    mov bx,10           ; agregamos 10 o 0ah al registro bx\n';
-        codigo += '    \n';
-        codigo += '\n';
-        codigo += 'reducir:\n';
-        codigo += '    mov dx,0            ; volvemos 0 el registro dx\n';
-        codigo += '    div bx              ; ax = ax / bx   dx = ax mod bx el valor en dx luego de sumar 48\n';
-        codigo += '                        ; es el que se va concatenando hacia el string final\n';
-        codigo += '    add dx,48           ; agregamos 48 o 30h al valor resultante en el registro dx\n';
-        codigo += '    dec si              ; regresamos 1 en la posicion de memoria guardada en si\n';
-        codigo += '    mov [si],dl         ; guardamos el contenido de dl (un numero decimal) en si\n';
-        codigo += '    cmp ax,0            ; comparamos si ax == 0\n';
-        codigo += '    jz impString   ; si ax == 0 quiere decir que se redujo completamente el ascii\n';
-        codigo += '    jmp reducir         ; sino lo repite hasta reducir al numero ascii a un valor menor a 16    \n';
-        codigo += '\n';
-        codigo += 'impString:           \n';
-        codigo += '    cmp di,-1\n'
-        codigo += '    jne continuarImprimiendoNumero\n';
-        codigo += '    dec si\n'
-        codigo += '    mov dl, 45\n'
-        codigo += '    mov [si],dl\n';
-        codigo += 'continuarImprimiendoNumero: \n'
-        codigo += '    lea dx, [si]\n';
-        codigo += '    imprimirString\n';
-        codigo += '    ret\n';
-        codigo += 'intToStringPrint endp\n';
-        codigo += 'fin_metodo_intToStringPrint:\n';
+        let codigo = 'imprimirNumero macro p1\n';
+        codigo += 'LOCAL reducirPrimitiva, imprimirPrimitiva\n';
+        codigo += 'mov ax,p1\n';
+        codigo += 'mov bx,10\n';
+        codigo += 'mov di,p1\n';
+        codigo += 'cmp di, 0ffffh\n';
+        codigo += 'jg reducirPrimitiva\n';
+        codigo += 'neg ax\n';
+        codigo += 'reducirPrimitiva:\n';
+        codigo += 'mov dx,0\n';
+        codigo += 'div bx\n';
+        codigo += 'add dx,48\n';
+        codigo += 'inc i\n';
+        codigo += 'push dx\n';
+        codigo += 'cmp ax,0\n';
+        codigo += 'jnz reducirPrimitiva\n';
+        codigo += 'mov di,p1\n';
+        codigo += 'cmp di, 0ffffh\n';
+        codigo += 'jg imprimirPrimitiva\n';
+        codigo += 'mov si,45\n';
+        codigo += 'push si\n';
+        codigo += 'inc i\n';
+        codigo += 'imprimirPrimitiva:\n';
+        codigo += 'pop dx\n';
+        codigo += 'printChar dl\n';
+        codigo += 'dec i\n';
+        codigo += 'cmp i,0\n';
+        codigo += 'jnz imprimirPrimitiva\n';
+        codigo += 'endm\n\n';
         return codigo;
     }
 
@@ -289,10 +311,7 @@ class Tabla {
 
         codigo += 'jmp fin_metodo_Invalue\n';
         codigo += 'Invalue proc\n';
-        codigo += 'call leerNumero\n'
-        codigo += 'xor ax, ax\n'
-        codigo += 'mov ax, numeroLectura\n';
-        codigo += 'mov ' + temp5 + ', ax\n';
+
         codigo += 'xor ax,ax\n';
         codigo += 'xor bx,bx\n';
 
@@ -300,21 +319,21 @@ class Tabla {
         codigo += 'inc bx\n'; // bx++
         codigo += 'mov si, bx\n';
         codigo += 'add si,si\n';
-        codigo += 'mov ax, pila[si]\n'; // ax = stack[bx + 1]
+        codigo += 'mov ax, es:pila[si]\n'; // ax = stack[bx + 1]
         codigo += 'mov ' + temp2 + ', ax\n'; // 0 - int, 1 - string
         codigo += 'xor ax,ax\n';
         codigo += 'inc bx\n'; // bx++
 
         codigo += 'mov si, bx\n';
         codigo += 'add si,si\n';
-        codigo += 'mov ax, pila[si]\n'; // ax = stack[bx + 2]
+        codigo += 'mov ax, es:pila[si]\n'; // ax = stack[bx + 2]
         codigo += 'mov ' + temp3 + ', ax\n'; // posicionDondeGuardar
         codigo += 'xor ax,ax\n';
         codigo += 'inc bx\n';
 
         codigo += 'mov si, bx\n';
         codigo += 'add si,si\n';
-        codigo += 'mov ax, pila[si]\n';
+        codigo += 'mov ax, es:pila[si]\n';
         codigo += 'mov ' + temp4 + ', ax\n'; // 0 - stack, 1 - heap
         codigo += 'xor ax,ax\n';
         codigo += 'xor bx,bx\n';
@@ -322,14 +341,32 @@ class Tabla {
         codigo += 'cmp ax,0\n';
         codigo += 'je isIntLabel\n';
         codigo += 'isStringLabel:\n';
+        codigo += 'call leerString\n'
+        codigo += 'xor ax, ax\n'
+        codigo += 'mov ax, numeroLectura\n';
+        codigo += 'mov ' + temp5 + ', ax\n';
+
+        codigo += 'mov ax, ' + temp5 + '\n';
+        codigo += 'mov bx, ' + temp3 + '\n';
+        codigo += 'add bx,bx\n';
+
+        codigo += 'mov cx,' + temp4 + '\n';
+        codigo += 'cmp cx,0\n';
+        codigo += 'je isStackInvalue\n';
+        codigo += 'jmp isHeapInvalue\n';
+
 
         codigo += 'jmp isSalidaLabel\n';
 
         codigo += 'isIntLabel:\n';
+        codigo += 'call leerNumero\n'
+        codigo += 'xor ax, ax\n'
+        codigo += 'mov ax, numeroLectura\n';
+        codigo += 'mov ' + temp5 + ', ax\n';
+
         codigo += 'mov ax, ' + temp5 + '\n';
         codigo += 'mov bx, ' + temp3 + '\n';
-        codigo += 'mov si, bx\n';
-        codigo += 'add si,si\n';
+        codigo += 'add bx,bx\n';
 
         codigo += 'mov cx,' + temp4 + '\n';
         codigo += 'cmp cx,0\n';
@@ -337,11 +374,11 @@ class Tabla {
         codigo += 'jmp isHeapInvalue\n';
 
         codigo += 'isStackInvalue:\n'
-        codigo += 'mov pila[bx], ax\n';
+        codigo += 'mov es:pila[bx], ax\n';
         codigo += 'jmp isSalidaLabel\n';
 
         codigo += 'isHeapInvalue:\n'
-        codigo += 'mov heap[bx], ax\n';
+        codigo += 'mov es:heap[bx], ax\n';
 
         codigo += 'isSalidaLabel:\n';
         codigo += '    ret\n';

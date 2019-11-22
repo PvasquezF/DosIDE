@@ -1,8 +1,10 @@
 function btnGenAssembler() {
-    // var tabla = new Tabla(null);
-    // var codigo = tabla.getCodigoEnsamblador();
-    generado = generarAssembler(tabla);
-    console.log(tabla.getCodigoEnsamblador());
+    if (!editor4D.getValue()) {
+        alert("NO HAY NADA PARA TRADUCIR");
+        return;
+    }
+    generado = generarAssembler();
+    document.getElementById("consolaArea").value = generado;
 }
 
 function generarAssembler() {
@@ -10,19 +12,8 @@ function generarAssembler() {
     var result = quadruplesGrammar.parse(editor4D.getValue());
     document.getElementById("consolaArea").value = "";
     var indexInstruccion = 0;
-    var tabla;
-    var codigo = "";
-    this.tabla = new Tabla(null);
-    this.tabla.isDebugger = false;
-    console.log(result.instrucciones)
-        /*for (indexInstruccion = 0; indexInstruccion < result.instrucciones.length; indexInstruccion++) {
-            if (result.instrucciones[indexInstruccion] instanceof Etiqueta ||
-                result.instrucciones[indexInstruccion] instanceof IniciarMetodo ||
-                result.instrucciones[indexInstruccion] instanceof FinalizarMetodo ||
-                result.instrucciones[indexInstruccion] instanceof Metodo) {
-                result.instrucciones[indexInstruccion].Ejecutar(tabla);
-            }
-        }*/
+    let table = new Tabla(null);
+    table.isDebugger = false;
 
     for (indexInstruccion = 0; indexInstruccion < result.instrucciones.length; indexInstruccion++) {
         if (result.instrucciones[indexInstruccion] instanceof Print ||
@@ -37,8 +28,8 @@ function generarAssembler() {
             result.instrucciones[indexInstruccion] instanceof FinalizarMetodo ||
             result.instrucciones[indexInstruccion] instanceof Llamada ||
             result.instrucciones[indexInstruccion] instanceof Invalue) {
-            codigo += result.instrucciones[indexInstruccion].getAssembler(this.tabla);
+            result.instrucciones[indexInstruccion].getAssembler(table);
         }
     }
-    return codigo;
+    return table.getCodigoEnsamblador();
 }

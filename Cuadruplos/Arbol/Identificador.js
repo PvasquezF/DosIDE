@@ -12,5 +12,10 @@ class Identificador {
     getAssembler(tabla) {
         return this.Nombre;
     }
+    getOptimizacion() {
+        let codigo = '';
+        codigo += this.Nombre;
+        return codigo;
+    }
 }
 exports.Identificador = Identificador;

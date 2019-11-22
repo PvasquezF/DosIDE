@@ -13,5 +13,10 @@ class SaltoCondicional {
         tabla.setAssembler(codigo);
         return null;
     }
+    getOptimizacion() {
+        let codigo = '';
+        codigo += 'jmp,,,' + this.Identificador + '\n';
+        return codigo;
+    }
 }
 exports.SaltoCondicional = SaltoCondicional;

@@ -20,5 +20,11 @@ class Asignacion {
         tabla.setAssembler(codigo);
         return null;
     }
+
+    getOptimizacion() {
+        let codigo = '';
+        codigo += '=,' + this.Valor.getOptimizacion() + ',,' + this.Identificador.Nombre + '\n';
+        return codigo;
+    }
 }
 exports.Asignacion = Asignacion;

@@ -23,6 +23,7 @@ function activarDebugger() {
     }
     actualizarStack();
     actualizarHeap();
+    actualizarSimbolos();
     if (tabla.indiceDebugger == instruccionesDebugger.length) {
         detenerDebugger();
     }
@@ -127,7 +128,9 @@ function actualizarSimbolos() {
     for (var i = 0; i < tabla.tabla.length; i++) {
         let simbolo;
         simbolo = this.tabla.tabla[i];
-        body += '<tr><td>' + simbolo.Identificador + '</td><td>' + simbolo.Valor + '</td></tr>';
+        if (simbolo.ListaIns == null || simbolo.ListaIns == undefined) {
+            body += '<tr><td>' + simbolo.Identificador + '</td><td>' + simbolo.Valor + '</td></tr>';
+        }
     }
     document.getElementById('tablaSimbolos').innerHTML = cabecera + body;
 }

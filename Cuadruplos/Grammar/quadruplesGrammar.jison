@@ -134,7 +134,7 @@ TIPOSALTO : je {$$ = $1;}
           ;
 
 VALOR : entero {$$ = new Primitivo(Number($1), yylineno + 1, _$[_$.length - 1].last_column + 1);}
-      | decimal {console.log(type of $1); $$ = new Primitivo(Number($1), yylineno + 1, _$[_$.length - 1].last_column + 1);}
+      | decimal {$$ = new Primitivo(Number($1), yylineno + 1, _$[_$.length - 1].last_column + 1);}
       | VARIABLE {$$ = $1;}
       ;
 

@@ -45,17 +45,37 @@ class Operacion {
             codigo += 'mov ax, ' + temp1 + '\n';
             codigo += 'mov cx, ' + temp2 + '\n';
             codigo += 'div cl\n';
+            codigo += 'xor ah, ah\n';
             codigo += 'mov ' + tabla.genTemporal(this.Resultado.Nombre) + ', ax\n';
         } else if (this.Operador.toLowerCase() == "%") {
             codigo += 'mov ax, ' + temp1 + '\n';
             codigo += 'mov cx, ' + temp2 + '\n';
             codigo += 'div cl\n';
             codigo += 'mov al, ah\n';
+            codigo += 'xor ah,ah\n'
             codigo += 'mov ' + tabla.genTemporal(this.Resultado.Nombre) + ', ax\n';
         }
         codigo += 'limpiarReg\n';
         tabla.setAssembler(codigo);
         return null;
+    }
+    getOptimizacion() {
+        let codigo = '';
+        let op1 = this.Valor1.getOptimizacion();
+        let op2 = this.Valor2.getOptimizacion();
+        let dir = this.Resultado.getOptimizacion();
+        if (this.Operador.toLowerCase() == "+") {
+            codigo += '+,' + op1 + ',' + op2 + ',' + dir + '\n';
+        } else if (this.Operador.toLowerCase() == "-") {
+            codigo += '-,' + op1 + ',' + op2 + ',' + dir + '\n';
+        } else if (this.Operador.toLowerCase() == "*") {
+            codigo += '*,' + op1 + ',' + op2 + ',' + dir + '\n';
+        } else if (this.Operador.toLowerCase() == "/") {
+            codigo += '/,' + op1 + ',' + op2 + ',' + dir + '\n';
+        } else { // %
+            codigo += '%,' + op1 + ',' + op2 + ',' + dir + '\n';
+        }
+        return codigo;
     }
 }
 exports.Operacion = Operacion;

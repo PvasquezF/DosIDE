@@ -22,7 +22,7 @@ class Invalue {
                     tabla.setHeap(posicionDondeGuardar, entradaUsuario);
                 }
             } else {
-                console.log("ERRROR DE TIPOS");
+                alert("ERRROR DE TIPOS");
             }
         } else if (tipoEntrada == 1) {
             if (typeof entradaUsuario === 'string') {
@@ -41,7 +41,7 @@ class Invalue {
                 tabla.InsertUpdate('h', direccion + 1);
                 tabla.setHeap(direccion, 0);
             } else {
-                console.log("Error de tipos");
+                alert("Error de tipos");
             }
         }
         return null;
@@ -52,6 +52,11 @@ class Invalue {
         codigo += 'call Invalue\n';
         tabla.setAssembler(codigo);
         return null;
+    }
+    getOptimizacion() {
+        let codigo = '';
+        codigo += 'call,,,$_in_value\n';
+        return codigo;
     }
 }
 exports.Invalue = Invalue;

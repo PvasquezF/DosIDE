@@ -25,5 +25,10 @@ class IniciarMetodo {
         tabla.setAssembler(codigo);
         return null;
     }
+    getOptimizacion() {
+        let codigo = '';
+        codigo += 'begin,,,' + this.Identificador + '\n';
+        return codigo;
+    }
 }
 exports.IniciarMetodo = IniciarMetodo;
